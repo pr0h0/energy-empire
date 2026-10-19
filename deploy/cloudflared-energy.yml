@@ -1,0 +1,12 @@
+# ENERGY EMPIRE — game-energy.pr0h0.me
+# Static single-page game served by the energy-empire-web nginx container on
+# 127.0.0.1:3700 (loopback only). No backend, no credentials behind it.
+tunnel: 71b888ad-88cc-452c-a8cc-06eb3c448860
+credentials-file: /home/pr0h0/.cloudflared/71b888ad-88cc-452c-a8cc-06eb3c448860.json
+
+ingress:
+  - hostname: game-energy.pr0h0.me
+    service: http://localhost:3700
+    originRequest:
+      connectTimeout: 30s
+  - service: http_status:404

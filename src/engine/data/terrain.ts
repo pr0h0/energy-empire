@@ -1,0 +1,40 @@
+import type { TerrainDef, TerrainId } from './types';
+
+const t = (id: TerrainId, name: string, color: string, priceMult: number, solar: number, wind: number, desc: string, extra: Partial<TerrainDef> = {}): TerrainDef =>
+  Object.freeze({ id, name, color, priceMult, solar, wind, desc, ...extra });
+
+export const TERRAIN: Record<TerrainId, TerrainDef> = {
+  grass: t('grass', 'Open land', '#4d7c3a', 1, 1, 1, 'Flat open land. Suits most installations.'),
+  forest: t('forest', 'Forest', '#2f5a2c', 0.8, 0.75, 0.8, 'Wooded land. Lower solar and wind yield; good for biomass plantations.'),
+  hill: t('hill', 'Hill', '#7c7a3e', 1.2, 1.0, 1.35, 'Elevated ground. +35% wind potential, enables compressed-air and pumped storage.'),
+  mountain: t('mountain', 'Mountain', '#77736d', 2.2, 1.05, 1.5, 'Steep terrain: costly land, strong wind, high hydro head. Requires Mountain Engineering.', { requires: 'materials_2' }),
+  river: t('river', 'River', '#3b82c4', 1.3, 0, 0, 'Flowing water. Enables waterwheels, run-of-river hydro and dams. Cools thermal plants.', { water: true, cooling: 1.3 }),
+  lake: t('lake', 'Lake', '#2b6cb0', 1.5, 0, 0, 'Still water. Cooling for adjacent thermal plants; pumped storage partner.', { water: true, cooling: 1.25 }),
+  coast: t('coast', 'Coast', '#c9b47a', 1.4, 1.05, 1.25, 'Shoreline. Tidal barrages, offshore access, +25% wind, sea-water cooling.', { cooling: 1.2 }),
+  ocean: t('ocean', 'Ocean', '#1e4e8c', 0.6, 0, 1.45, 'Open sea. Offshore wind (+45%). Requires Offshore Engineering.', { water: true, cooling: 1.3, requires: 'wind_4' }),
+  desert: t('desert', 'Desert', '#d6b46a', 0.6, 1.3, 1.05, 'Arid land. +30% solar yield, cheap land, poor cooling.', { cooling: 0.85 }),
+  urban: t('urban', 'Urban', '#6b7280', 1.8, 0.9, 0.7, 'Built-up area. Rooftops suit solar; dense demand nearby.'),
+  industrial: t('industrial', 'Industrial', '#8a6f5a', 1.4, 0.95, 0.9, 'Industrial zone. Suits thermal plants, fuel processing and substations.'),
+  geothermal: t('geothermal', 'Geothermal field', '#b4532a', 1.6, 1, 1, 'Hot rock near the surface. Enables geothermal plants.'),
+  reservoir: t('reservoir', 'Reservoir', '#2563a8', 0, 0, 0, 'Land flooded by a dam reservoir. Not buildable.', { water: true, cooling: 1.25 }),
+  void: t('void', 'Deep space', '#0b1022', 1, 0.6, 0, 'Empty space. Low stellar flux but plenty of room.'),
+  inner: t('inner', 'Inner orbit', '#3a2f5c', 1.4, 2.2, 0, 'Close solar orbit. High stellar flux for collectors and swarm modules.'),
+  corona: t('corona', 'Stellar corona', '#c2410c', 2, 4, 0, 'Sun-grazing zone. Extreme flux; only stellar-grade structures survive.'),
+  orbit: t('orbit', 'Planetary orbit', '#1f3b63', 1.2, 1.0, 0, 'Orbit around a planet. Orbital solar and relays.'),
+  lunar: t('lunar', 'Lunar surface', '#9ca3af', 1.1, 1.0, 0, 'Moon surface: 14-day light cycle averaged, low gravity industry.'),
+  martian: t('martian', 'Martian surface', '#b45a33', 1.1, 0.45, 0.2, 'Mars: weaker sunlight, thin atmosphere, geothermal potential.'),
+  asteroid: t('asteroid', 'Asteroid belt', '#5b4b3a', 0.8, 0.35, 0, 'Raw material source; manufacturing discounts for orbital structures.'),
+  gasgiant: t('gasgiant', 'Gas giant', '#a16207', 1.5, 0.05, 0, 'Helium-3 scooping for advanced fusion.'),
+  nebula: t('nebula', 'Nebula', '#6d28d9', 1.2, 0.5, 0, 'Diffuse gas cloud. Matter harvesting for accretion engines.'),
+  star_red: t('star_red', 'Red dwarf systems', '#7f1d1d', 0.8, 0.5, 0, 'Dim but long-lived stars. Lower output, very slow wear.'),
+  star_yellow: t('star_yellow', 'Sun-like systems', '#a16207', 1, 1, 0, 'G-type stars. Balanced output.'),
+  star_blue: t('star_blue', 'Blue giant systems', '#1d4ed8', 1.6, 2.5, 0, 'Hot massive stars. Huge output, faster wear.'),
+  neutron: t('neutron', 'Pulsar field', '#0e7490', 1.4, 0.2, 0, 'Neutron stars. Pulsed induction harvesting.'),
+  galactic_core: t('galactic_core', 'Galactic core', '#9d174d', 2.5, 1.5, 0, 'Supermassive black hole region. Accretion harvesting.'),
+  galaxy_spiral: t('galaxy_spiral', 'Spiral galaxy', '#4338ca', 1, 1, 0, 'A star-rich spiral galaxy.'),
+  galaxy_elliptical: t('galaxy_elliptical', 'Elliptical galaxy', '#92400e', 1.1, 1.2, 0, 'Old massive galaxy, many stars, little gas.'),
+  quasar: t('quasar', 'Quasar', '#db2777', 2.5, 3, 0, 'Active galactic nucleus with relativistic jets.'),
+  filament: t('filament', 'Cosmic filament', '#1e3a8a', 1.2, 0.3, 0, 'Dense intergalactic gas bridge. Long-range energy conduits.'),
+  supervoid: t('supervoid', 'Supervoid', '#020617', 0.7, 0.05, 0, 'Near-empty region. Speculative vacuum-energy experiments only.'),
+  smbh: t('smbh', 'Rotating black hole', '#111827', 3, 0.5, 0, 'Spinning supermassive black hole. Ergosphere energy extraction.'),
+};
